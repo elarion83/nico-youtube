@@ -69,7 +69,7 @@ class YoutubeSkill(CommonPlaySkill):
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
 
-        self.vid_url ='/watch?v=8kVI621fZug'
+        self.vid_url ='/watch?v=bWXazVhlyxQ'
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
         LOG.debug('Media title: ' + 'chill nigger')
@@ -82,6 +82,7 @@ class YoutubeSkill(CommonPlaySkill):
 
     def get_stream_url(self, youtube_url):
         abs_url = base_url + youtube_url
+        LOG.debug(abs_url);
         LOG.debug('pafy processing: ' + abs_url)
         streams = pafy.new(abs_url)
         LOG.debug('audiostreams found: ' + str(streams.audiostreams));
