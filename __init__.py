@@ -85,6 +85,7 @@ class YoutubeSkill(CommonPlaySkill):
         LOG.debug(abs_url);
         LOG.debug('pafy processing: ' + abs_url)
         streams = pafy.new(abs_url)
+        LOG.debug(streams)
         LOG.debug('audiostreams found: ' + str(streams.audiostreams));
         bestaudio = streams.getbestaudio()
         LOG.debug('audiostream selected: ' + str(bestaudio));
