@@ -1,0 +1,9 @@
+{
+"utterance": "Stream KEXP",
+"intent_type": "StreamRequest.intent",
+"intent": {
+"station": "KEXP"
+},
+"expected_dialog": "now.playing",
+"evaluation_timeout": 15
+}
