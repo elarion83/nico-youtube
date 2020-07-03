@@ -69,7 +69,7 @@ class YoutubeSkill(CommonPlaySkill):
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
         tracklist = []
-        self.vid_url ='/watch?v=5qap5aO4i9A'
+        self.vid_url ='/watch?v=jrTMMG0zJyI'
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
         LOG.debug('Media title: ' + 'Chill Music')
