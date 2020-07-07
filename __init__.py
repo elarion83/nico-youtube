@@ -70,7 +70,7 @@ class YoutubeSkill(CommonPlaySkill):
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
         tracklist = []
-        urls_for_rand_video = ['/watch?v=9tsKQyGpp3M','/watch?v=RAQzoBFTidA', '/watch?v=QRQwZDWz1Pw']
+        urls_for_rand_video = ['/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=DudtmBUrp2c']
         self.vid_url = random.choice(urls_for_rand_video)
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
