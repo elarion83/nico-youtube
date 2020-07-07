@@ -75,6 +75,7 @@ class YoutubeSkill(CommonPlaySkill):
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
         LOG.debug('Media title: ' + self.vid_title)
+        
         tracklist.append(self.stream_url)
         self.mediaplayer.add_list(tracklist)
         self.audio_state = 'playing'
