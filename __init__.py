@@ -74,12 +74,12 @@ class YoutubeSkill(CommonPlaySkill):
         self.vid_url = random.choice(urls_for_rand_video)
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
-        LOG.debug('Media title: ' + self.vid_name)
+        LOG.debug('Media title: ' + self.string)
 
         tracklist.append(self.stream_url)
         self.mediaplayer.add_list(tracklist)
         self.audio_state = 'playing'
-        self.speak_dialog('now.playing', {'content': self.vid_name} )
+        self.speak_dialog('now.playing', {'content': self.string} )
         wait_while_speaking()
         self.mediaplayer.play()
 
