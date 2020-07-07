@@ -70,12 +70,12 @@ class YoutubeSkill(CommonPlaySkill):
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
         tracklist = []
-        urls_for_rand_video = ['/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=DudtmBUrp2c']
+        urls_for_rand_video = ['/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
         self.vid_url = random.choice(urls_for_rand_video)
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
         LOG.debug('Media title: ' + self.vid_title)
-        
+
         tracklist.append(self.stream_url)
         self.mediaplayer.add_list(tracklist)
         self.audio_state = 'playing'
