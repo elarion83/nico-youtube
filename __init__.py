@@ -56,14 +56,16 @@ class YoutubeSkill(CommonPlaySkill):
         # Play <data> on youtube
         match = re.search(self.translate_regex('on_youtube'), phrase)
         if match:
-            data = re.sub(self.translate_regex('on_youtube'), '', phrase)
+            #data = re.sub(self.translate_regex('on_youtube'), '', phrase)
             LOG.debug('CPS Match (on_youtube): ' + data)
+            data = 'rap'
             return phrase, CPSMatchLevel.EXACT, data
 
         match = re.search(self.translate_regex('metallica'), phrase)
         if match:
-            data = re.sub(self.translate_regex('metallica'), '', phrase)
+           # data = re.sub(self.translate_regex('metallica'), '', phrase)
             LOG.debug('CPS Match (metallica): ' + data)
+            data = 'rock'
             return phrase, CPSMatchLevel.EXACT, data
 
         return phrase, CPSMatchLevel.GENERIC, phrase
@@ -75,8 +77,16 @@ class YoutubeSkill(CommonPlaySkill):
 
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
+        LOG.debug(search_term)
+        if search_term == 'rock':
+            urls_for_rand_video = ['/watch?v=tAGnKpE4NCI']
+            LOG.debug('ROCK')
+        else :
+            urls_for_rand_video = ['/watch?v=vSkb0kDacjs']
+            LOG.debug('OTHEEEER')
+
         tracklist = []
-        urls_for_rand_video = ['/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
+       # urls_for_rand_video = ['/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
         self.vid_url = random.choice(urls_for_rand_video)
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
