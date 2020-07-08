@@ -75,7 +75,7 @@ class YoutubeSkill(CommonPlaySkill):
         if search_term == 'rock':
             urls_for_rand_video = ['/watch?v=xnKhsTXoKCI&list=PLenUrOlreSp6EXV4PJWLEvLIdnacjn-2w']
             LOG.debug('ROCK')
-        elif search_term == 'the new song' :
+        elif search_term == 'wanted' :
             urls_for_rand_video = ['/watch?v=qOEMHg43psI']
         else :
             urls_for_rand_video = ['/watch?v=vSkb0kDacjs', '/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
