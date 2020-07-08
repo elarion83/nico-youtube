@@ -20,12 +20,12 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import random
+
 import re
 import requests
 import pafy
 from bs4 import BeautifulSoup
-
+headers = {'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'}
 from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
 from mycroft.skills.core import intent_file_handler
 from mycroft.util.log import LOG
@@ -56,52 +56,50 @@ class YoutubeSkill(CommonPlaySkill):
         # Play <data> on youtube
         match = re.search(self.translate_regex('on_youtube'), phrase)
         if match:
-            #data = re.sub(self.translate_regex('on_youtube'), '', phrase)
-            data = 'rap' 
+            data = re.sub(self.translate_regex('on_youtube'), '', phrase)
             LOG.debug('CPS Match (on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
 
         return phrase, CPSMatchLevel.GENERIC, phrase
 
     def CPS_start(self, phrase, data):
-        LOG.debug(phrase)
         LOG.debug('CPS Start: ' + data)
         self.search_youtube(data)
 
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
-        
-        LOG.debug(search_term)
-        if search_term == 'rock':
-            urls_for_rand_video = ['/watch?v=xnKhsTXoKCI&list=PLenUrOlreSp6EXV4PJWLEvLIdnacjn-2w']
-            LOG.debug('ROCK')
-        elif search_term == 'wanted' :
-            urls_for_rand_video = ['/watch?v=qOEMHg43psI']
-        else :
-            urls_for_rand_video = ['/watch?v=vSkb0kDacjs', '/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
-            LOG.debug('OTHEEEER')
-
-
         tracklist = []
-       # urls_for_rand_video = ['/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
-        self.vid_url = random.choice(urls_for_rand_video)
-        self.stream_url = self.get_stream_url(self.vid_url)
-        LOG.debug('Found stream URL: ' + self.vid_url)
-        LOG.debug('Media title: ' + 'I will enjoy you my bro')
+        response = requests.get(search_url, params={'search_query': search_term}, headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-        tracklist.append(self.stream_url)
-        self.mediaplayer.add_list(tracklist)
-        self.audio_state = 'playing'
-        self.speak_dialog('now.playing', {'content': search_term} )
+        print(soup.findAll(attrs={"class": "yt-uix-tile-link"}))
+        for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
+            if not re.match('/watch\?v=\w{11}', vid['href']):
+              LOG.debug('no media: ' + vid['href'])
+              continue
+
+            self.vid_url = vid['href']
+            self.vid_name = vid.string
+            self.stream_url = self.get_stream_url(self.vid_url)
+            LOG.debug('Found stream URL: ' + self.vid_url)
+            LOG.debug('Media title: ' + self.vid_name)
+            tracklist.append(self.stream_url)
+            self.mediaplayer.add_list(tracklist)
+            self.audio_state = 'playing'
+            self.speak_dialog('now.playing', {'content': self.vid_name} )
+            wait_while_speaking()
+            self.mediaplayer.play()
+            return
+
+        # We didn't find any playable results
+        self.speak_dialog('not.found')
         wait_while_speaking()
-        self.mediaplayer.play()
+        LOG.debug('Could not find any results with the query term: ' + search_term)
 
     def get_stream_url(self, youtube_url):
         abs_url = base_url + youtube_url
-        LOG.debug(abs_url);
         LOG.debug('pafy processing: ' + abs_url)
         streams = pafy.new(abs_url)
-        LOG.debug(streams)
         LOG.debug('audiostreams found: ' + str(streams.audiostreams));
         bestaudio = streams.getbestaudio()
         LOG.debug('audiostream selected: ' + str(bestaudio));
