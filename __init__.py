@@ -53,9 +53,9 @@ class YoutubeSkill(CommonPlaySkill):
     def CPS_match_query_phrase(self, phrase):
         # Look for regex matches starting from the most specific to the least
 
-        match_nico = re.search(self.translate_regex('techno_on_youtube'), phrase)
+        match = re.search(self.translate_regex('techno_on_youtube'), phrase)
         
-        if match_nico:
+        if match:
             data = re.sub(self.translate_regex('techno_on_youtube'), '', phrase)
             LOG.debug('CPS Match (techno_on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
