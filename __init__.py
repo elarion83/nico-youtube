@@ -57,7 +57,7 @@ class YoutubeSkill(CommonPlaySkill):
         match = re.search(self.translate_regex('on_youtube'), phrase)
         if match:
             #data = re.sub(self.translate_regex('on_youtube'), '', phrase)
-            data = 'rap'
+            data = 'rap or some techno'
             LOG.debug('CPS Match (on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
 
@@ -95,7 +95,7 @@ class YoutubeSkill(CommonPlaySkill):
         tracklist.append(self.stream_url)
         self.mediaplayer.add_list(tracklist)
         self.audio_state = 'playing'
-        self.speak_dialog('now.playing', {'content': 'I will enjoy you my bro'} )
+        self.speak_dialog('now.playing', {'content': 'some' + search_term} )
         wait_while_speaking()
         self.mediaplayer.play()
 
