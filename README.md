@@ -8,10 +8,10 @@ Based on the I Heart Radio and Tunein skills by johnbartkiw.
 
 This is still untidy, but the basic functionality works.
 
-This project is a fork from the aweosme mcdruid work that can be found here :
+This project is a fork from the awesome mcdruid work that can be found here :
 https://gitlab.com/mcdruid/mycroft-youtube-audio
 
-I want this plugin only to load few chill music, so if u want it just download it bro ! :)
+I want this plugin only to load few chill music, so if u want it just download it bro ! (when it will be finished meh) :)
 
 ## Examples
 * "Play Hendrix (on|with|using) youtube"
