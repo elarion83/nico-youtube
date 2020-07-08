@@ -61,13 +61,6 @@ class YoutubeSkill(CommonPlaySkill):
             LOG.debug('CPS Match (on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
 
-        match = re.search(self.translate_regex('metallica'), phrase)
-        if match:
-           # data = re.sub(self.translate_regex('metallica'), '', phrase)
-            data = 'rock'
-            LOG.debug('CPS Match (metallica): ' + data)
-            return phrase, CPSMatchLevel.EXACT, data
-
         return phrase, CPSMatchLevel.GENERIC, phrase
 
     def CPS_start(self, phrase, data):
