@@ -55,7 +55,7 @@ class YoutubeSkill(CommonPlaySkill):
 
         match_nico = re.search(self.translate_regex('techno_on_youtube'), phrase)
         
-        if match:
+        if match_nico:
             data = re.sub(self.translate_regex('techno_on_youtube'), '', phrase)
             LOG.debug('CPS Match (techno_on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
