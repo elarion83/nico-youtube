@@ -57,7 +57,7 @@ class YoutubeSkill(CommonPlaySkill):
         match = re.search(self.translate_regex('on_youtube'), phrase)
         if match:
             #data = re.sub(self.translate_regex('on_youtube'), '', phrase)
-            data = 'rap or some techno'
+            data = 'rap'
             LOG.debug('CPS Match (on_youtube): ' + data)
             return phrase, CPSMatchLevel.EXACT, data
 
@@ -77,6 +77,7 @@ class YoutubeSkill(CommonPlaySkill):
 
     # Attempt to find the first result matching the query string
     def search_youtube(self, search_term):
+        
         LOG.debug(search_term)
         if search_term == 'rock':
             urls_for_rand_video = ['/watch?v=tAGnKpE4NCI']
@@ -85,7 +86,9 @@ class YoutubeSkill(CommonPlaySkill):
             urls_for_rand_video = ['/watch?v=vSkb0kDacjs', '/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
             LOG.debug('OTHEEEER')
 
+
         tracklist = []
+       # urls_for_rand_video = ['/watch?v=lB8uQ_zO-o8','/watch?v=HPssThWONWk', '/watch?v=VGrNjY6_x2k','/watch?v=f6QFfmwFT3k','/watch?v=OvYX6IM8ME4','/watch?v=FspennuvEoY', '/watch?v=Tqj2bJGRhNI','/watch?v=_0VVXhcsTdo','/watch?v=AaxFuXpcQmE', '/watch?v=YK0D4byEVH4', '/watch?v=qd_8mm906GA']
         self.vid_url = random.choice(urls_for_rand_video)
         self.stream_url = self.get_stream_url(self.vid_url)
         LOG.debug('Found stream URL: ' + self.vid_url)
@@ -94,7 +97,7 @@ class YoutubeSkill(CommonPlaySkill):
         tracklist.append(self.stream_url)
         self.mediaplayer.add_list(tracklist)
         self.audio_state = 'playing'
-        self.speak_dialog('now.playing', {'content': 'some' + search_term} )
+        self.speak_dialog('now.playing', {'content': search_term} )
         wait_while_speaking()
         self.mediaplayer.play()
 
